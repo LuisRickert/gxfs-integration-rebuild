@@ -1,0 +1,21 @@
+source: https://github.com/LuisRickert/gxfs-integration-rebuild.git
+sourceRef: main
+namespace: argocd
+
+applications:
+  - name: app-of-apps
+    project: cluster
+    enabled: true
+    sourcePath: argocd
+    helmValues:
+      - ./cluster/cluster.yaml
+
+projects:
+  - name: cluster
+    enabled: true
+    destinations:
+      - namespace: "*"
+        server: "*"
+    clusterResourceWhitelist:
+      - group: "*"
+        kind: "*"
